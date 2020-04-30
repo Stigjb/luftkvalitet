@@ -6,14 +6,9 @@ use crate::routes::AppRoute;
 /// Nav component
 pub struct Nav;
 
-#[derive(Properties, Clone, Default)]
-pub struct Props {
-    pub a: String,
-}
-
 impl Component for Nav {
     type Message = ();
-    type Properties = Props;
+    type Properties = ();
 
     fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
         Nav {}
@@ -29,10 +24,23 @@ impl Component for Nav {
 
     fn view(&self) -> Html {
         html! {
-            <nav>
-                <ul>
-                    <li><RouterAnchor<AppRoute> route=AppRoute::Home classes="app-link" >{ "Home" }</RouterAnchor<AppRoute>></li>
-                    <li><RouterAnchor<AppRoute> route=AppRoute::About classes="app-link">{ "About" }</RouterAnchor<AppRoute>></li>
+            <nav class="navbar navbar-expand-lg">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <RouterAnchor<AppRoute> route=AppRoute::Home classes="nav-link" >
+                            { "Home" }
+                        </RouterAnchor<AppRoute>>
+                    </li>
+                    <li class="nav-item">
+                        <RouterAnchor<AppRoute> route=AppRoute::Luftkvalitet classes="nav-link">
+                            { "Luftkvalitet" }
+                        </RouterAnchor<AppRoute>>
+                    </li>
+                    <li class="nav-item">
+                        <RouterAnchor<AppRoute> route=AppRoute::About classes="nav-link">
+                            { "About" }
+                        </RouterAnchor<AppRoute>>
+                    </li>
                 </ul>
             </nav>
         }

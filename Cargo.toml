@@ -18,9 +18,8 @@ log = "0.4.8"
 web_logger = "0.2.0"
 yew = "0.15.0"
 yew-router = "0.12.1"
-wasm-bindgen = "0.2.60"
+wasm-bindgen = { version = "0.2.60", features = ["serde-serialize"] }
 wee_alloc = "0.4.5"
-yewtil = { git = "https://github.com/yewstack/yew", tag = "0.15.0" }
 wasm-bindgen-futures = "0.4.10"
 web-sys = { version = "0.3.37", features = [
     "Document",
@@ -28,6 +27,8 @@ web-sys = { version = "0.3.37", features = [
     "HtmlCollection"
 ] }
 stdweb = "0.4.20"
+serde = "1.0.106"
+serde_json = "1.0.51"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.10"

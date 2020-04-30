@@ -21,7 +21,7 @@ impl Component for Home {
 
     fn view(&self) -> Html {
         html! {
-            <div class="app">
+            <div class="jumbotron">
                 <header class="app-header">
                     <a
                         class="app-logo"
@@ -35,7 +35,7 @@ impl Component for Home {
                     </p>
                     <a
                         id="learn_yew"
-                        class="app-link"
+                        class="btn btn-primary"
                         href="https://yew.rs"
                         target="_blank"
                         rel="noopener noreferrer"

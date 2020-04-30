@@ -127,25 +127,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "futures-channel-preview"
-version = "0.3.0-alpha.19"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d5e5f4df964fa9c1c2f8bddeb5c3611631cacd93baf810fc8bb2fb4b495c263a"
-dependencies = [
- "futures-core-preview",
-]
-
-[[package]]
 name = "futures-core"
 version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f25592f769825e89b92358db00d26f965761e094951ac44d3663ef25b7ac464a"
-
-[[package]]
-name = "futures-core-preview"
-version = "0.3.0-alpha.19"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b35b6263fb1ef523c3056565fa67b1d16f0a8604ff12b11b08c25f28a734c60a"
 
 [[package]]
 name = "futures-executor"
@@ -156,17 +141,6 @@ dependencies = [
  "futures-core",
  "futures-task",
  "futures-util",
-]
-
-[[package]]
-name = "futures-executor-preview"
-version = "0.3.0-alpha.19"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75236e88bd9fe88e5e8bfcd175b665d0528fe03ca4c5207fabc028c8f9d93e98"
-dependencies = [
- "futures-core-preview",
- "futures-util-preview",
- "num_cpus",
 ]
 
 [[package]]
@@ -215,17 +189,6 @@ dependencies = [
  "pin-utils",
  "proc-macro-hack",
  "proc-macro-nested",
- "slab",
-]
-
-[[package]]
-name = "futures-util-preview"
-version = "0.3.0-alpha.19"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5ce968633c17e5f97936bd2797b6e38fb56cf16a7422319f7ec2e30d3c470e8d"
-dependencies = [
- "futures-core-preview",
- "pin-utils",
  "slab",
 ]
 
@@ -281,15 +244,6 @@ dependencies = [
  "js-sys",
  "wasm-bindgen",
  "web-sys",
-]
-
-[[package]]
-name = "hermit-abi"
-version = "0.1.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "61565ff7aaace3525556587bd2dc31d4a07071957be715e63ce7b1eccf51a8f4"
-dependencies = [
- "libc",
 ]
 
 [[package]]
@@ -388,16 +342,6 @@ dependencies = [
  "lexical-core",
  "memchr",
  "version_check",
-]
-
-[[package]]
-name = "num_cpus"
-version = "1.13.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05499f3756671c15885fee9034446956fff3f243d6077b91e5767df161f766b3"
-dependencies = [
- "hermit-abi",
- "libc",
 ]
 
 [[package]]
@@ -528,10 +472,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d022496b16281348b52d0e30ae99e01a73d737b2f45d38fed4edf79f9325a1d5"
 dependencies = [
  "discard",
- "futures-channel-preview",
- "futures-core-preview",
- "futures-executor-preview",
- "futures-util-preview",
  "rustc_version",
  "serde",
  "serde_json",
@@ -769,36 +709,6 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 [[package]]
 name = "yew"
 version = "0.15.0"
-source = "git+https://github.com/yewstack/yew?tag=0.15.0#6498a462be4b058159eea1c1c667b5ddb14a9146"
-dependencies = [
- "anyhow",
- "anymap",
- "bincode",
- "cfg-if",
- "cfg-match",
- "console_error_panic_hook",
- "futures",
- "gloo",
- "http",
- "indexmap",
- "js-sys",
- "log",
- "proc-macro-hack",
- "proc-macro-nested",
- "ryu",
- "serde",
- "serde_json",
- "slab",
- "thiserror",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
- "yew-macro 0.15.0 (git+https://github.com/yewstack/yew?tag=0.15.0)",
-]
-
-[[package]]
-name = "yew"
-version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7532a83ec6c2173cd72888bb3ac0e3656d0dd152476f71631f4b465481855391"
 dependencies = [
@@ -824,7 +734,7 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
- "yew-macro 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "yew-macro",
 ]
 
 [[package]]
@@ -832,6 +742,8 @@ name = "yew-app"
 version = "0.1.0"
 dependencies = [
  "log",
+ "serde",
+ "serde_json",
  "stdweb",
  "wasm-bindgen",
  "wasm-bindgen-futures",
@@ -839,22 +751,8 @@ dependencies = [
  "web-sys",
  "web_logger",
  "wee_alloc",
- "yew 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "yew",
  "yew-router",
- "yewtil",
-]
-
-[[package]]
-name = "yew-macro"
-version = "0.15.0"
-source = "git+https://github.com/yewstack/yew?tag=0.15.0#6498a462be4b058159eea1c1c667b5ddb14a9146"
-dependencies = [
- "boolinator",
- "lazy_static",
- "proc-macro-hack",
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]
@@ -887,7 +785,7 @@ dependencies = [
  "serde_json",
  "wasm-bindgen",
  "web-sys",
- "yew 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "yew",
  "yew-router-macro",
  "yew-router-route-parser",
 ]
@@ -911,29 +809,4 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b3c4708315d2325182b9c3d8c9805e4f5293baf6e6103f9cd4f989ddedca192a"
 dependencies = [
  "nom",
-]
-
-[[package]]
-name = "yewtil"
-version = "0.2.0"
-source = "git+https://github.com/yewstack/yew?tag=0.15.0#6498a462be4b058159eea1c1c667b5ddb14a9146"
-dependencies = [
- "futures",
- "log",
- "stdweb",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
- "yew 0.15.0 (git+https://github.com/yewstack/yew?tag=0.15.0)",
- "yewtil-macro",
-]
-
-[[package]]
-name = "yewtil-macro"
-version = "0.1.0"
-source = "git+https://github.com/yewstack/yew?tag=0.15.0#6498a462be4b058159eea1c1c667b5ddb14a9146"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
 ]
