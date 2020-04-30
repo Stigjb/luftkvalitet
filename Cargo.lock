@@ -316,6 +316,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "luftkvalitet"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
+ "stdweb",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "wasm-bindgen-test",
+ "web-sys",
+ "web_logger",
+ "wee_alloc",
+ "yew",
+ "yew-router",
+]
+
+[[package]]
 name = "memchr"
 version = "2.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -735,24 +753,6 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "yew-macro",
-]
-
-[[package]]
-name = "yew-app"
-version = "0.1.0"
-dependencies = [
- "log",
- "serde",
- "serde_json",
- "stdweb",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "wasm-bindgen-test",
- "web-sys",
- "web_logger",
- "wee_alloc",
- "yew",
- "yew-router",
 ]
 
 [[package]]
