@@ -54,13 +54,13 @@ impl Component for Luftkvalitet {
             _ => unreachable!(),
         };
         html! {
-            <>
+            <div>
                 <form>
                 <AreaSelect on_change=&self.on_area_change />
                 <StationSelect area=&self.area on_change=&self.on_station_change />
                 </form>
                 <p>{ text }</p>
-            </>
+            </div>
         }
     }
 }
