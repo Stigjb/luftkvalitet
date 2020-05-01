@@ -3,26 +3,28 @@ use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, RequestMode, Response};
 use yew::prelude::*;
+use yew_components::Select;
 
 use crate::fetch::{FetchError, FetchState};
 use crate::link_future::LinkFuture;
-use crate::nilu::Station;
+use crate::nilu::{Area, Station};
 
 pub struct StationSelect {
     link: ComponentLink<Self>,
     props: Props,
+    selected_station: Option<Station>,
     areas: FetchState<Vec<Station>>,
 }
 
 pub enum Msg {
     SetFetchState(FetchState<Vec<Station>>),
-    StationUpdate(ChangeData),
+    StationUpdate(Station),
 }
 
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
-    pub area: Option<String>,
-    pub on_change: Callback<String>,
+    pub area: Option<Area>,
+    pub on_change: Callback<Station>,
 }
 
 impl Component for StationSelect {
@@ -34,6 +36,7 @@ impl Component for StationSelect {
             link,
             props,
             areas: FetchState::default(),
+            selected_station: None,
         }
     }
 
@@ -46,10 +49,9 @@ impl Component for StationSelect {
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
             Msg::SetFetchState(areas) => self.areas = areas,
-            Msg::StationUpdate(change_data) => {
-                if let ChangeData::Select(select) = change_data {
-                    self.props.on_change.emit(select.value());
-                }
+            Msg::StationUpdate(station) => {
+                self.selected_station = Some(station.clone());
+                self.props.on_change.emit(station);
             }
         };
         true
@@ -68,7 +70,7 @@ impl Component for StationSelect {
         match area {
             Some(area) => {
                 let future = async move {
-                    match fetch_stations(&area).await {
+                    match fetch_stations(&area.to_string()).await {
                         Ok(md) => Msg::SetFetchState(FetchState::Success(md)),
                         Err(err) => Msg::SetFetchState(FetchState::Failed(err)),
                     }
@@ -97,15 +99,14 @@ impl Component for StationSelect {
 }
 
 impl StationSelect {
-    fn make_select(&self, areas: &[Station]) -> Html {
-        let options = areas.iter().map(|station| {
-            html! { <option>{ &station.station }</option> }
-        });
+    fn make_select(&self, stations: &[Station]) -> Html {
         let onchange = self.link.callback(Msg::StationUpdate);
         html! {
             <div class="form-group">
                 <label for="station-select">{ "Velg en stasjon: " }</label>
-                <select id="station-select" class="form-control" onchange=onchange>{ for options }</select>
+                <Select<Station>
+                    on_change=onchange options=stations.to_vec() selected=&self.selected_station
+                />
             </div>
         }
     }

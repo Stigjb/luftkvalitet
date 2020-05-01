@@ -1,18 +1,19 @@
 use yew::prelude::*;
 
 use crate::components::{area_select::AreaSelect, station_select::StationSelect};
+use crate::nilu::{Area, Station};
 
 pub struct Luftkvalitet {
-    link: ComponentLink<Self>,
-    area: Option<String>,
-    station: Option<String>,
-    on_area_change: Callback<String>,
-    on_station_change: Callback<String>,
+    _link: ComponentLink<Self>,
+    area: Option<Area>,
+    station: Option<Station>,
+    on_area_change: Callback<Area>,
+    on_station_change: Callback<Station>,
 }
 
 pub enum Msg {
-    AreaChange(String),
-    StationChange(String),
+    AreaChange(Area),
+    StationChange(Station),
 }
 
 impl Component for Luftkvalitet {
@@ -23,7 +24,7 @@ impl Component for Luftkvalitet {
         let on_area_change = link.callback(Msg::AreaChange);
         let on_station_change = link.callback(Msg::StationChange);
         Self {
-            link,
+            _link: link,
             area: None,
             station: None,
             on_area_change,
@@ -48,8 +49,13 @@ impl Component for Luftkvalitet {
 
     fn view(&self) -> Html {
         let text = match (&self.area, &self.station) {
-            (Some(area), Some(station)) => format!("Selected station {} in area {}", station, area),
-            (Some(area), None) => format!("Selected area {}", area),
+            (Some(area), Some(station)) => html! {
+                <>
+                <p>{ format!("Selected station {} in area {}", station, area) }</p>
+                <pre>{ format!("{:#?}\n\n{:#?}", area, station) }</pre>
+                </>
+            },
+            (Some(area), None) => html! { format!("Selected area {}", area) },
             (None, None) => "No area or station selected".into(),
             _ => unreachable!(),
         };

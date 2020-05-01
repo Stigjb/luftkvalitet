@@ -3,26 +3,28 @@ use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, RequestMode, Response};
 use yew::prelude::*;
+use yew_components::Select;
 
 use crate::fetch::{FetchError, FetchState};
 use crate::link_future::LinkFuture;
-use crate::nilu::Areas;
+use crate::nilu::Area;
 
 pub struct AreaSelect {
     link: ComponentLink<Self>,
     props: Props,
-    areas: FetchState<Areas>,
+    areas: FetchState<Vec<Area>>,
+    selected_area: Option<Area>,
 }
 
 #[derive(Debug)]
 pub enum Msg {
-    AreaInput(ChangeData),
-    SetFetchState(FetchState<Areas>),
+    AreaInput(Area),
+    SetFetchState(FetchState<Vec<Area>>),
 }
 
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
-    pub on_change: Callback<String>,
+    pub on_change: Callback<Area>,
 }
 
 impl Component for AreaSelect {
@@ -34,6 +36,7 @@ impl Component for AreaSelect {
             link,
             props,
             areas: FetchState::default(),
+            selected_area: None,
         }
     }
 
@@ -59,10 +62,9 @@ impl Component for AreaSelect {
                 self.areas = areas;
                 true
             }
-            Msg::AreaInput(change_data) => {
-                if let ChangeData::Select(select) = change_data {
-                    self.props.on_change.emit(select.value())
-                }
+            Msg::AreaInput(area) => {
+                self.selected_area = Some(area.clone());
+                self.props.on_change.emit(area);
                 false
             }
         }
@@ -83,21 +85,18 @@ impl Component for AreaSelect {
 }
 
 impl AreaSelect {
-    fn make_select(&self, areas: &Areas) -> Html {
-        let options = areas.0.iter().map(|area| {
-            html! { <option>{ &area.area }</option> }
-        });
+    fn make_select(&self, areas: &[Area]) -> Html {
         let onchange = self.link.callback(Msg::AreaInput);
         html! {
             <div class="form-group">
                 <label for="area-select">{ "Velg et område: " }</label>
-                <select id="area-select" class="form-control" onchange=onchange>{ for options }</select>
+                <Select<Area> on_change=onchange options=areas.to_vec() selected=&self.selected_area />
             </div>
         }
     }
 }
 
-async fn fetch_areas() -> Result<Areas, FetchError> {
+async fn fetch_areas() -> Result<Vec<Area>, FetchError> {
     let mut opts = RequestInit::new();
     opts.method("GET");
     opts.mode(RequestMode::Cors);
@@ -111,6 +110,6 @@ async fn fetch_areas() -> Result<Areas, FetchError> {
     let resp: Response = resp_value.dyn_into().unwrap();
 
     let json: JsValue = JsFuture::from(resp.json()?).await?;
-    let areas: Areas = json.into_serde()?;
+    let areas: Vec<Area> = json.into_serde()?;
     Ok(areas)
 }
