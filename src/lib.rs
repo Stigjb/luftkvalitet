@@ -10,7 +10,6 @@ pub mod nilu;
 pub mod routes;
 
 use wasm_bindgen::prelude::*;
-use web_logger;
 
 use app::App;
 
