@@ -113,14 +113,8 @@ impl StationSelect {
 }
 
 fn not_fetching() -> Html {
-    let option = html! {
-        <option>{ "Velg et område først" }</option>
-    };
     html! {
-        <div class="form-group">
-            <label for="station-select">{ "Velg en stasjon: " }</label>
-            <select id="station-select" class="form-control">{ option }</select>
-        </div>
+        <div class="alert alert-info">{ "Velg en stasjon først" }</div>
     }
 }
 
