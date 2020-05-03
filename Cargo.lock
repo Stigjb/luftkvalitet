@@ -28,12 +28,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f8aac770f1885fd7e387acedd76065302551364496e46b3dd00860b2f8359b9d"
 
 [[package]]
-name = "base-x"
-version = "0.2.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b20b618342cf9891c292c4f5ac2cde7287cc5c87e87e9c769d617793607dec1"
-
-[[package]]
 name = "bincode"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -88,12 +82,6 @@ dependencies = [
  "cfg-if",
  "wasm-bindgen",
 ]
-
-[[package]]
-name = "discard"
-version = "1.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "212d0f5754cb6769937f4501cc0e67f4f4483c8d2c3e1e922ee9edbe4ab4c7c0"
 
 [[package]]
 name = "fnv"
@@ -322,12 +310,11 @@ dependencies = [
  "log",
  "serde",
  "serde_json",
- "stdweb",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "wasm-bindgen-test",
+ "wasm-logger",
  "web-sys",
- "web_logger",
  "wee_alloc",
  "yew",
  "yew-components",
@@ -383,18 +370,18 @@ checksum = "8e946095f9d3ed29ec38de908c22f95d9ac008e424c7bcae54c75a79c527c694"
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.10"
+version = "1.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "df246d292ff63439fea9bc8c0a270bed0e390d5ebd4db4ba15aba81111b5abe3"
+checksum = "8872cf6f48eee44265156c111456a700ab3483686b3f96df4cf5481c89157319"
 dependencies = [
  "unicode-xid",
 ]
 
 [[package]]
 name = "quote"
-version = "1.0.3"
+version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2bdc6c187c65bca4260c9011c9e3132efe4909da44726bad24cf7572ae338d7f"
+checksum = "4c1f4b0efa5fc5e8ceb705136bfee52cfdb6a4e3509f770b478cd6ed434232a7"
 dependencies = [
  "proc-macro2",
 ]
@@ -457,20 +444,14 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.51"
+version = "1.0.52"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da07b57ee2623368351e9a0488bb0b261322a15a6e0ae53e243cbdc0f4208da9"
+checksum = "a7894c8ed05b7a3a279aeb79025fdec1d3158080b75b98a08faf2806bb799edd"
 dependencies = [
  "itoa",
  "ryu",
  "serde",
 ]
-
-[[package]]
-name = "sha1"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2579985fda508104f7587689507983eadd6a6e84dd35d6d115361f530916fa0d"
 
 [[package]]
 name = "slab"
@@ -485,57 +466,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f3eb36b47e512f8f1c9e3d10c2c1965bc992bd9cdb024fa581e2194501c83d3"
 
 [[package]]
-name = "stdweb"
-version = "0.4.20"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d022496b16281348b52d0e30ae99e01a73d737b2f45d38fed4edf79f9325a1d5"
-dependencies = [
- "discard",
- "rustc_version",
- "serde",
- "serde_json",
- "stdweb-derive",
- "stdweb-internal-macros",
- "stdweb-internal-runtime",
- "wasm-bindgen",
-]
-
-[[package]]
-name = "stdweb-derive"
-version = "0.5.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c87a60a40fccc84bef0652345bbbbbe20a605bf5d0ce81719fc476f5c03b50ef"
-dependencies = [
- "proc-macro2",
- "quote",
- "serde",
- "serde_derive",
- "syn",
-]
-
-[[package]]
-name = "stdweb-internal-macros"
-version = "0.2.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "58fa5ff6ad0d98d1ffa8cb115892b6e69d67799f6763e162a1c9db421dc22e11"
-dependencies = [
- "base-x",
- "proc-macro2",
- "quote",
- "serde",
- "serde_derive",
- "serde_json",
- "sha1",
- "syn",
-]
-
-[[package]]
-name = "stdweb-internal-runtime"
-version = "0.1.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "213701ba3370744dcd1a12960caa4843b3d68b4d1c0a5d575e0d65b2ee9d16c0"
-
-[[package]]
 name = "syn"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -548,18 +478,18 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.15"
+version = "1.0.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "54b3d3d2ff68104100ab257bb6bb0cb26c901abe4bd4ba15961f3bf867924012"
+checksum = "d12a1dae4add0f0d568eebc7bf142f145ba1aa2544cafb195c76f0f409091b60"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.15"
+version = "1.0.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ca972988113b7715266f91250ddb98070d033c62a011fa0fcc57434a649310dd"
+checksum = "3f34e0c1caaa462fd840ec6b768946ea1e7842620d94fe29d5b847138f521269"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -671,23 +601,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "wasm-logger"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "074649a66bb306c8f2068c9016395fa65d8e08d2affcbf95acf3c24c3ab19718"
+dependencies = [
+ "log",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
 name = "web-sys"
 version = "0.3.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2d6f51648d8c56c366144378a33290049eafdd784071077f6fe37dae64c1c4cb"
 dependencies = [
  "js-sys",
- "wasm-bindgen",
-]
-
-[[package]]
-name = "web_logger"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f50afec20c2e728ca33ffb77d1ed049c8559f1d2e59e0fea36f6586d5bc74683"
-dependencies = [
- "log",
- "stdweb",
  "wasm-bindgen",
 ]
 

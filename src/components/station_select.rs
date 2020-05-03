@@ -1,3 +1,4 @@
+use log::info;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
@@ -59,10 +60,10 @@ impl Component for StationSelect {
 
     fn change(&mut self, props: Self::Properties) -> ShouldRender {
         if props.area == self.props.area {
-            web_sys::console::log_1(&"No change in area or callback".into());
+            info!("No change in area or callback");
             return false;
         }
-        web_sys::console::log_1(&"Prop change".into());
+        info!("Prop change");
 
         self.props = props;
         let area = self.props.area.clone();
