@@ -24,7 +24,7 @@ impl Component for Nav {
 
     fn view(&self) -> Html {
         html! {
-            <nav class="navbar navbar-expand-sm">
+            <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <RouterAnchor<AppRoute> route=AppRoute::Luftkvalitet classes="nav-link">
