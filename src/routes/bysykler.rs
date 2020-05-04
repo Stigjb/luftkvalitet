@@ -124,9 +124,9 @@ async fn fetch_system_info(system: &str) -> Result<Gbfs<SystemInformation>, Fetc
     info!("{:?}", url);
 
     let request: Request = Request::new_with_str_and_init(&url, &opts)?;
-    request
-        .headers()
-        .set("Client-Identifier", CLIENT_IDENTIFIER)?;
+    // request
+    //     .headers()
+    //     .set("Client-Identifier", CLIENT_IDENTIFIER)?;
 
     web_sys::console::log_1(&request);
 

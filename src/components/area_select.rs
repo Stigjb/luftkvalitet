@@ -102,6 +102,7 @@ async fn fetch_areas() -> Result<Vec<Area>, FetchError> {
     opts.mode(RequestMode::Cors);
 
     let request = Request::new_with_str_and_init("https://api.nilu.no/lookup/areas", &opts)?;
+    // request.headers().set("Client-Identifier", "stigjb")?;
 
     let window = web_sys::window().unwrap();
     let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
