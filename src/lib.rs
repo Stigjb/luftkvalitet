@@ -5,6 +5,7 @@
 pub mod app;
 pub mod components;
 pub mod fetch;
+pub mod gbfs;
 pub mod link_future;
 pub mod nilu;
 pub mod routes;
