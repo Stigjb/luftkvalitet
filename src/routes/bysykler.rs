@@ -63,11 +63,11 @@ impl Component for Bysykler {
     }
 
     fn rendered(&mut self, first_render: bool) {
-        if !first_render {
+        if !first_render || self.system.is_none() {
             return;
         }
 
-        let system = self.system.clone().unwrap_or("yo".into());
+        let system = self.system.clone().unwrap();
 
         let future = async move {
             match fetch_system_info(&system).await {
@@ -82,8 +82,8 @@ impl Component for Bysykler {
 
     fn view(&self) -> Html {
         let text = match &self.system_info {
-            FetchState::NotFetching => html! { "Not fetching" },
-            FetchState::Fetching => html! { "Fetching" },
+            FetchState::NotFetching => html! {},
+            FetchState::Fetching => html! { "Henter data ..." },
             FetchState::Success(system) => html! {
                 <pre>{ format!("{:#?}", system) }</pre>
             },
@@ -101,7 +101,7 @@ impl Component for Bysykler {
                 <div>
                     <form>
                         <div class="form-group">
-                            <label for="area-select">{ "Velg et område: " }</label>
+                            <label for="area-select">{ "Velg et system: " }</label>
                             <Select<String> on_change=onchange options=options selected=&self.system />
                         </div>
                     </form>
