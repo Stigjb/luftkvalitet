@@ -124,6 +124,9 @@ async fn fetch_system_info(system: &str) -> Result<Gbfs<SystemInformation>, Fetc
     info!("{:?}", url);
 
     let request: Request = Request::new_with_str_and_init(&url, &opts)?;
+    request.headers().set("Accept", "application/json")?;
+    // It seems that Urban Sharing's server doesn't send an appropriate
+    // Access-Control-Allow-Headers in their preflight response
     // request
     //     .headers()
     //     .set("Client-Identifier", CLIENT_IDENTIFIER)?;

@@ -1,4 +1,3 @@
-use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, RequestMode, Response};
@@ -102,15 +101,18 @@ async fn fetch_areas() -> Result<Vec<Area>, FetchError> {
     opts.mode(RequestMode::Cors);
 
     let request = Request::new_with_str_and_init("https://api.nilu.no/lookup/areas", &opts)?;
-    // request.headers().set("Client-Identifier", "stigjb")?;
+    request.headers().set("Accept", "application/json")?;
 
     let window = web_sys::window().unwrap();
     let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
-    assert!(resp_value.is_instance_of::<Response>());
 
+    // `resp_value` is a `Response` object.
+    assert!(resp_value.is_instance_of::<Response>());
     let resp: Response = resp_value.dyn_into().unwrap();
 
-    let json: JsValue = JsFuture::from(resp.json()?).await?;
+    // Convert this other `Promise` into a rust `Future`.
+    let json = JsFuture::from(resp.json()?).await?;
     let areas: Vec<Area> = json.into_serde()?;
+
     Ok(areas)
 }
