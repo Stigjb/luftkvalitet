@@ -1,12 +1,12 @@
 [package]
 authors = ["Stig Johan Berggren <stigjb@gmail.com>"]
 categories = ["wasm"]
-description = "Visualiser luftkvalitet i en Yew-app"
+description = "Demonstrasjon av norske datakilder tilgjengelig via API-er på Internett"
 edition = "2018"
 license = "Apache-2.0/MIT"
-name = "luftkvalitet"
+name = "norske-api-er"
 readme = "./README.md"
-repository = "https://github.com/stigjb/luftkvalitet.git"
+repository = "https://github.com/stigjb/norske-api-er.git"
 version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

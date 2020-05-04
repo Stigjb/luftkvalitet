@@ -1,6 +1,6 @@
 {
   "author": "Stig Johan Berggren <stigjb@gmail.com>",
-  "name": "luftkvalitet",
+  "name": "norske-api-er",
   "version": "0.1.0",
   "scripts": {
     "build": "WASM_PACK_PROFILE=release parcel build static/index.html --public-url ./",

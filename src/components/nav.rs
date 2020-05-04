@@ -25,8 +25,12 @@ impl Component for Nav {
     fn view(&self) -> Html {
         html! {
             <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+                <a class="navbar-brand" href="#">{ "Norske API-er" }</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <RouterAnchor<AppRoute> route=AppRoute::Bysykler classes="nav-link">
+                            { "Bysykler" }
+                        </RouterAnchor<AppRoute>>
                         <RouterAnchor<AppRoute> route=AppRoute::Luftkvalitet classes="nav-link">
                             { "Luftkvalitet" }
                         </RouterAnchor<AppRoute>>
