@@ -31,6 +31,8 @@ impl Component for Nav {
                         <RouterAnchor<AppRoute> route=AppRoute::Bysykler classes="nav-link">
                             { "Bysykler" }
                         </RouterAnchor<AppRoute>>
+                    </li>
+                    <li class="nav-item">
                         <RouterAnchor<AppRoute> route=AppRoute::Luftkvalitet classes="nav-link">
                             { "Luftkvalitet" }
                         </RouterAnchor<AppRoute>>
