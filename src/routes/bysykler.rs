@@ -84,9 +84,7 @@ impl Component for Bysykler {
         let text = match &self.system_info {
             FetchState::NotFetching => html! {},
             FetchState::Fetching => html! { "Henter data ..." },
-            FetchState::Success(system) => html! {
-                <pre>{ format!("{:#?}", system) }</pre>
-            },
+            FetchState::Success(system) => system_view(system),
             FetchState::Failed(err) => html! { format!("Failed!\n{:#?}", err) },
         };
         let onchange = self.link.callback(Msg::SystemChange);
@@ -94,6 +92,8 @@ impl Component for Bysykler {
             "oslobysykkel.no".into(),
             "bergenbysykkel.no".into(),
             "trondheimbysykkel.no".into(),
+            "edinburghcyclehire.com".into(),
+            "oslovintersykkel.no".into(),
         ];
         html! {
             <>
@@ -110,6 +110,26 @@ impl Component for Bysykler {
                 </div>
             </>
         }
+    }
+}
+
+fn system_view(system: &Gbfs<SystemInformation>) -> Html {
+    html! {
+        <div class="list-group">
+            <div class="list-group-item">{ format!("System-ID: {}", system.data.system_id) }</div>
+            <div class="list-group-item">{ format!("Språk: {}", system.data.language) }</div>
+            <div class="list-group-item">{ format!("Navn: {}", system.data.name) }</div>
+            <div class="list-group-item">{ format!("Operatør: {}", system.data.operator) }</div>
+            <div class="list-group-item">{ format!("Tidssone: {}", system.data.timezone) }</div>
+            <a href=format!("tel:{}", system.data.phone_number)
+                    class="list-group-item list-group-item-action">
+                { format!("Telefonnummer: {}", system.data.phone_number) }
+            </a>
+            <a href=format!("mailto:{}", system.data.email)
+                    class="list-group-item list-group-item-action">
+                { format!("E-post: {}", system.data.email) }
+            </a>
+        </div>
     }
 }
 
