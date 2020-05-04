@@ -6,7 +6,7 @@ pub mod home;
 pub mod luftkvalitet;
 
 /// App routes
-#[derive(Switch, Debug, Clone)]
+#[derive(Clone, Debug, PartialEq, Switch)]
 pub enum AppRoute {
     #[to = "/luftkvalitet"]
     Luftkvalitet,

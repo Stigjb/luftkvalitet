@@ -51,8 +51,8 @@ impl Component for Luftkvalitet {
         let text = match (&self.area, &self.station) {
             (Some(area), Some(station)) => html! {
                 <>
-                <p>{ format!("Selected station {} in area {}", station, area) }</p>
-                <pre>{ format!("{:#?}\n\n{:#?}", area, station) }</pre>
+                    <p>{ format!("Selected station {} in area {}", station, area) }</p>
+                    <pre>{ format!("{:#?}\n\n{:#?}", area, station) }</pre>
                 </>
             },
             (Some(area), None) => html! { format!("Selected area {}", area) },
@@ -60,13 +60,16 @@ impl Component for Luftkvalitet {
             _ => unreachable!(),
         };
         html! {
-            <div>
-                <form>
-                <AreaSelect on_change=&self.on_area_change />
-                <StationSelect area=&self.area on_change=&self.on_station_change />
-                </form>
-                <p>{ text }</p>
-            </div>
+            <>
+                <h1>{ "Luftkvalitet" }</h1>
+                <div>
+                    <form>
+                    <AreaSelect on_change=&self.on_area_change />
+                    <StationSelect area=&self.area on_change=&self.on_station_change />
+                    </form>
+                    <p>{ text }</p>
+                </div>
+            </>
         }
     }
 }

@@ -27,7 +27,10 @@ impl Component for Bysykler {
 
     fn view(&self) -> Html {
         html! {
-            <p>{ "Under bygging" }</p>
+            <>
+                <h1>{ "Bysykler" }</h1>
+                <p>{ "Under bygging" }</p>
+            </>
         }
     }
 }

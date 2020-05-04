@@ -27,7 +27,10 @@ impl Component for Home {
 
     fn view(&self) -> Html {
         html! {
-            <p>{ "Under bygging" }</p>
+            <>
+                <h1>{ "Norske API-er" }</h1>
+                <p>{ "Under bygging" }</p>
+            </>
         }
     }
 }

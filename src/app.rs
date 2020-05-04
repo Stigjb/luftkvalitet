@@ -27,10 +27,9 @@ impl Component for App {
     fn view(&self) -> Html {
         html! {
             <div class="container">
-                <Nav />
                 <Router<AppRoute, ()>
                     render = Router::render(|switch: AppRoute | {
-                        match switch {
+                        let page = match &switch {
                             AppRoute::Home => html!{ <Home /> },
                             AppRoute::Bysykler => html!{ <Bysykler /> },
                             AppRoute::Luftkvalitet => html!{ <Luftkvalitet /> },
@@ -38,6 +37,12 @@ impl Component for App {
                             AppRoute::PageNotFound(Permissive(Some(missed_route))) => {
                                 html!{format!("Page '{}' not found", missed_route)}
                             },
+                        };
+                        html! {
+                            <>
+                                <Nav switch=switch />
+                                { page }
+                            </>
                         }
                     } )
                     redirect = Router::redirect(|route: Route<()>| {
