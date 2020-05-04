@@ -4,8 +4,8 @@ use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, RequestMode, Response};
 use yew::prelude::*;
-use yew_components::Select;
 
+use super::select::Select;
 use crate::fetch::{FetchError, FetchState};
 use crate::link_future::LinkFuture;
 use crate::nilu::{Area, Station};
@@ -105,7 +105,7 @@ impl StationSelect {
         html! {
             <div class="form-group">
                 <label for="station-select">{ "Velg en stasjon: " }</label>
-                <Select<Station>
+                <Select<Station> id="station-select" class="form-control"
                     on_change=onchange options=stations.to_vec() selected=&self.selected_station
                 />
             </div>

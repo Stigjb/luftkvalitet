@@ -2,8 +2,8 @@ use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, RequestMode, Response};
 use yew::prelude::*;
-use yew_components::Select;
 
+use super::select::Select;
 use crate::fetch::{FetchError, FetchState};
 use crate::link_future::LinkFuture;
 use crate::nilu::Area;
@@ -89,7 +89,8 @@ impl AreaSelect {
         html! {
             <div class="form-group">
                 <label for="area-select">{ "Velg et område: " }</label>
-                <Select<Area> on_change=onchange options=areas.to_vec() selected=&self.selected_area />
+                <Select<Area> id="area-select" class="form-control"
+                    on_change=onchange options=areas.to_vec() selected=&self.selected_area />
             </div>
         }
     }

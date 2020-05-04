@@ -4,8 +4,8 @@ use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, RequestMode, Response};
 use yew::prelude::*;
-use yew_components::Select;
 
+use crate::components::select::Select;
 use crate::fetch::{FetchError, FetchState};
 use crate::gbfs::{Gbfs, SystemInformation};
 use crate::link_future::LinkFuture;
@@ -101,8 +101,9 @@ impl Component for Bysykler {
                 <div>
                     <form>
                         <div class="form-group">
-                            <label for="area-select">{ "Velg et system: " }</label>
-                            <Select<String> on_change=onchange options=options selected=&self.system />
+                            <label for="system-select">{ "Velg et system: " }</label>
+                            <Select<String> id="system-select" class="form-control"
+                                on_change=onchange options=options selected=&self.system />
                         </div>
                     </form>
                     <p>{ text }</p>
