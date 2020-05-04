@@ -1,12 +1,12 @@
 use yew::prelude::*;
 
-pub struct Bysykler {
+pub struct Home {
     _link: ComponentLink<Self>,
 }
 
 pub enum Msg {}
 
-impl Component for Bysykler {
+impl Component for Home {
     type Message = Msg;
     type Properties = ();
 

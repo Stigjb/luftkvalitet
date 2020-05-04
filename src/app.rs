@@ -3,7 +3,7 @@ use yew_router::switch::Permissive;
 use yew_router::{prelude::*, route::Route};
 
 use crate::components::nav::Nav;
-use crate::routes::{bysykler::Bysykler, luftkvalitet::Luftkvalitet, AppRoute};
+use crate::routes::{bysykler::Bysykler, home::Home, luftkvalitet::Luftkvalitet, AppRoute};
 
 /// Root component
 pub struct App;
@@ -31,6 +31,7 @@ impl Component for App {
                 <Router<AppRoute, ()>
                     render = Router::render(|switch: AppRoute | {
                         match switch {
+                            AppRoute::Home => html!{ <Home /> },
                             AppRoute::Bysykler => html!{ <Bysykler /> },
                             AppRoute::Luftkvalitet => html!{ <Luftkvalitet /> },
                             AppRoute::PageNotFound(Permissive(None)) => html!{"Page not found"},
