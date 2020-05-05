@@ -1,10 +1,11 @@
+use chrono::{offset::Utc, serde::ts_seconds, DateTime};
 use serde::Deserialize;
 
 #[derive(Clone, Debug, Deserialize, PartialEq)]
 pub struct Gbfs<T> {
-    pub last_updated: u64,
+    #[serde(with = "ts_seconds")]
+    pub last_updated: DateTime<Utc>,
     pub ttl: u32,
-    pub version: Option<String>,
     pub data: T,
 }
 

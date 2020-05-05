@@ -1,4 +1,4 @@
-use log::info;
+use chrono_tz::Tz;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
@@ -101,12 +101,23 @@ impl Component for Bysykler {
                 <div>
                     <form>
                         <div class="form-group">
-                            <label for="system-select">{ "Velg et system: " }</label>
+                            <label for="system-select">{ "Velg et bysykkelsystem: " }</label>
                             <Select<String> id="system-select" class="form-control"
                                 on_change=onchange options=options selected=&self.system />
                         </div>
                     </form>
                     <p>{ text }</p>
+                    <p>
+                        { "Bysykkeldata leveres av Urban Sharing. For informasjon om API-et, se " }
+                        <a href="https://oslobysykkel.no/apne-data/sanntid">
+                            { "deres hjemmesider" }
+                        </a>
+                        { ". Dataene er gjort tilgjengelig under " }
+                        <a href="https://data.norge.no/nlod/no/2.0">
+                            { "Norsk lisens for offentlige data (NLOD) 2.0" }
+                        </a>
+                        { "." }
+                    </p>
                 </div>
             </>
         }
@@ -114,7 +125,10 @@ impl Component for Bysykler {
 }
 
 fn system_view(system: &Gbfs<SystemInformation>) -> Html {
+    let tz: Tz = system.data.timezone.parse().unwrap_or(Tz::UTC);
     html! {
+        <>
+        <h2>{ "Systeminformasjon" }</h2>
         <div class="list-group">
             <div class="list-group-item">{ format!("System-ID: {}", system.data.system_id) }</div>
             <div class="list-group-item">{ format!("Språk: {}", system.data.language) }</div>
@@ -129,7 +143,11 @@ fn system_view(system: &Gbfs<SystemInformation>) -> Html {
                     class="list-group-item list-group-item-action">
                 { format!("E-post: {}", system.data.email) }
             </a>
+            <div class="list-group-item">
+                { format!("Siste status: {}", system.last_updated.with_timezone(&tz)) }
+            </div>
         </div>
+        </>
     }
 }
 
@@ -142,31 +160,22 @@ async fn fetch_system_info(system: &str) -> Result<Gbfs<SystemInformation>, Fetc
         "https://gbfs.urbansharing.com/{}/system_information.json",
         system
     );
-    info!("{:?}", url);
-
     let request: Request = Request::new_with_str_and_init(&url, &opts)?;
     request.headers().set("Accept", "application/json")?;
     // It seems that Urban Sharing's server doesn't send an appropriate
     // Access-Control-Allow-Headers in their preflight response
-    // request
-    //     .headers()
-    //     .set("Client-Identifier", CLIENT_IDENTIFIER)?;
-
-    web_sys::console::log_1(&request);
+    request
+        .headers()
+        .set("Client-Identifier", CLIENT_IDENTIFIER)?;
 
     let window = web_sys::window().unwrap();
     let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
-    assert!(resp_value.is_instance_of::<Response>());
 
+    assert!(resp_value.is_instance_of::<Response>());
     let resp: Response = resp_value.dyn_into().unwrap();
-    web_sys::console::log_1(&resp);
-    info!("Response status {:?}", resp.status());
-    info!("Response headers: {:?}", resp.headers());
 
     let json: JsValue = JsFuture::from(resp.json()?).await?;
-
-    info!("{:?}", json);
-
     let system_info: Gbfs<SystemInformation> = json.into_serde()?;
+
     Ok(system_info)
 }

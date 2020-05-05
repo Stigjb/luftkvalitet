@@ -115,7 +115,7 @@ impl StationSelect {
 
 fn not_fetching() -> Html {
     html! {
-        <div class="alert alert-info">{ "Velg en stasjon først" }</div>
+        <div class="alert alert-info">{ "Velg et område først" }</div>
     }
 }
 

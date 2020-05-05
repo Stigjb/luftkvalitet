@@ -1,24 +1,17 @@
 use yew::prelude::*;
 
-pub struct Home {
-    _link: ComponentLink<Self>,
-}
-
-pub enum Msg {}
+pub struct Home;
 
 impl Component for Home {
-    type Message = Msg;
+    type Message = ();
     type Properties = ();
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { _link: link }
+    fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+        Self
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        match msg {
-            _ => (),
-        };
-        true
+    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
+        false
     }
 
     fn change(&mut self, _props: Self::Properties) -> ShouldRender {
@@ -29,7 +22,18 @@ impl Component for Home {
         html! {
             <>
                 <h1>{ "Norske API-er" }</h1>
-                <p>{ "Under bygging" }</p>
+                <p>
+                    { "Denne appen demonstrerer et utvalg av API-er for å hente data fra norske datakilder. Kildekoden til prosjektet finner du på " }
+                    <a href="https://github.com/stigjb/norske-api-er">{ "Github" }</a>
+                    { "." }
+                </p>
+                <p>
+                    { "Appen er skrevet i rammeverket "}
+                    <a href="https://yew.rs">{ "Yew" }</a>
+                    { ". Den er programmert i "}
+                    <a href="https://rust-lang.org">{ "Rust" }</a>
+                    { " og kompileres til Webassembly." }
+                </p>
             </>
         }
     }

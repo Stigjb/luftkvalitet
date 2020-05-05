@@ -1,5 +1,6 @@
 use std::fmt::Display;
 
+use chrono::{DateTime, Utc};
 use serde::Deserialize;
 
 #[derive(Clone, Debug, Deserialize, PartialEq)]
@@ -22,8 +23,8 @@ pub struct Station {
     pub owner: Option<String>,
     pub status: Option<String>,
     pub description: Option<String>,
-    pub first_measurment: String, // ISO Timestamp
-    pub last_measurment: String,  // ISO Timestamp
+    pub first_measurment: DateTime<Utc>,
+    pub last_measurment: DateTime<Utc>,
     pub components: String,
     pub is_visible: bool,
 }

@@ -58,14 +58,9 @@ impl Component for Luftkvalitet {
 
     fn view(&self) -> Html {
         let text = match &self.area_station {
-            AreaStation::Station(station) => html! {
-                <>
-                    <p>{ format!("Valgt stasjon {} i område {}", station, station.area) }</p>
-                    <pre>{ format!("{:#?}", station) }</pre>
-                </>
-            },
+            AreaStation::Station(station) => station_view(station),
             AreaStation::Area(area) => html! { format!("Valgt område: {}", area) },
-            AreaStation::Neither => "Velg et område".into(),
+            AreaStation::Neither => html! {},
         };
         let area = match &self.area_station {
             AreaStation::Neither => None,
@@ -81,8 +76,99 @@ impl Component for Luftkvalitet {
                         <StationSelect area=area on_change=&self.on_station_change />
                     </form>
                     <p>{ text }</p>
+                    <p>
+                        { "Dataene kommer fra Norsk institutt for luftforskning (Nilu). Se "}
+                        <a href="http://luftkvalitet.info">{ "luftkvalitet.info" }</a>
+                        { " og " }
+                        <a href="https://nilu.no">{ "nilu.no" }</a>
+                        { "." }
+                    </p>
                 </div>
             </>
         }
     }
+}
+
+fn station_view(station: &Station) -> Html {
+    let visible = if station.is_visible {
+        html! {
+            <div class="list-group-item list-group-item-success">{ "Stasjonen er synlig" }</div>
+        }
+    } else {
+        html! {
+            <div class="list-group-item list-group-item-warning">
+                { "Stasjonen er ikke synlig" }
+            </div>
+        }
+    };
+    let owner: Html = station
+        .owner
+        .as_ref()
+        .map(|owner| {
+            html! {
+                <div class="list-group-item">{ format!("Eier: {}", owner) }</div>
+            }
+        })
+        .unwrap_or_default();
+    let status: Html = station
+        .status
+        .as_ref()
+        .map(|status| {
+            html! {
+                <div class="list-group-item">{ format!("Status: {}", status) }</div>
+            }
+        })
+        .unwrap_or_default();
+    let description: Html = station
+        .description
+        .as_ref()
+        .map(|description| {
+            html! {
+                <div class="list-group-item">{ format!("Beskrivelse: {}", description) }</div>
+            }
+        })
+        .unwrap_or_default();
+    html! {
+        <>
+        <h2>{ "Informasjon om målestasjonen" }</h2>
+        <div class="list-group">
+            <div class="list-group-item">{ format!("Målestasjon-ID: {}", station.id) }</div>
+            <div class="list-group-item">{ format!("Sone: {}", station.area.zone) }</div>
+            <div class="list-group-item">{ format!("Kommune: {}", station.area.municipality) }</div>
+            <div class="list-group-item">{ format!("Område: {}", station.area.area) }</div>
+            <div class="list-group-item">
+                { format!("Posisjon: {}, {}", latitude(station.latitude), longitude(station.longitude)) }
+            </div>
+            <div class="list-group-item">
+                { format!("Tid for første måling: {}", station.first_measurment) }
+            </div>
+            <div class="list-group-item">
+                { format!("Tid for nyeste måling: {}", station.last_measurment) }
+            </div>
+            <div class="list-group-item">{ format!("Komponenter: {}", station.components) }</div>
+            { owner }
+            { status }
+            { description }
+            { visible }
+        </div>
+        </>
+    }
+}
+
+fn longitude(long: f32) -> String {
+    let ew = if long < 0. { 'W' } else { 'E' };
+    let long = long.abs();
+    let deg = long.trunc();
+    let min = (long - deg) * 60.;
+
+    format!("{}° {:.3}′ {}", deg, min, ew)
+}
+
+fn latitude(long: f32) -> String {
+    let ns = if long < 0. { 'S' } else { 'N' };
+    let long = long.abs();
+    let deg = long.trunc();
+    let min = (long - deg) * 60.;
+
+    format!("{}° {:.3}′ {}", deg, min, ns)
 }
